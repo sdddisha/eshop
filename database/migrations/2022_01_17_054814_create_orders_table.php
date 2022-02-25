@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Null_;
 
 class CreateOrdersTable extends Migration
 {
@@ -15,7 +16,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');  
+            $table->bigInteger('user_id')->default(99);  
             $table->string('fname');
             $table->string('lname');
             $table->text('address');
@@ -23,10 +24,12 @@ class CreateOrdersTable extends Migration
             $table->string('country');
             $table->string('zip');
             $table->string('pnumber');
-            $table->decimal('total', 20, 6);
+            $table->decimal('total', 20, 2);
             $table->enum('status', ['pending', 'processing', 'completed', 'decline'])->default('pending'); 
             $table->boolean('payment_status')->default(1);
             $table->string('payment_method');
+            $table->string('transaction_id')->default(Null);
+            $table->bigInteger('refund_status')->default(0);
             $table->timestamps();
         });
     }

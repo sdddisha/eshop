@@ -17,9 +17,11 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->bigInteger('cat_id');
             $table->bigInteger('sub_cat');
+            $table->string('sku');
             $table->string('pname');
             $table->bigInteger('price');
             $table->string('desc');
+            $table->string('name');
             $table->string('file_path');
             $table->timestamps();
         });

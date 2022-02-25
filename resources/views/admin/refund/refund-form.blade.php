@@ -2,6 +2,30 @@
 <html lang="en">
 
 <head>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,19 +33,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Products</title>
- 
+    <title>Refund</title>
 
     <!-- Custom fonts for this template-->
-    <link href="{{asset('admin/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('admin/vendor/fontawesome-free/css/all.min.css')}}" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{asset('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
- <!-- Custom styles for this page -->
- <link href="{{asset('admin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -37,7 +59,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Teacher <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
             </a>
 
             <!-- Divider -->
@@ -45,23 +67,39 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{url('teacher/dashboard')}}">
+                <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
+            <!-- Divider -->
             
+
+            <!-- Heading -->
+           
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+         
+
+            <!-- Divider -->
+           
+
+            <!-- Heading -->
+
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Manage the following</span>
+                    <span>Pages</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Screens:</h6>
-                        
+                      
                         <a class="collapse-item" href="{{url('add-category')}}">Add category</a>
                         <a class="collapse-item" href="{{url('add-sub-category')}}">Add sub category</a>
                         <a class="collapse-item" href="{{url('show-category')}}">Show categories</a>
@@ -72,9 +110,11 @@
                         <a class="collapse-item" href="{{url('show-order')}}">Show order details</a>
                         <a class="collapse-item" href="{{url('add-pages')}}">Add Pages</a>
                         <a class="collapse-item" href="{{url('show-pages')}}">Show Pages</a>
+                        
                     </div>
                 </div>
             </li>
+
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
@@ -159,7 +199,7 @@
                                         </div>
                                     </div>
                                 </form>
-                            </div>main
+                            </div>
                         </li>
 
                         <!-- Nav Item - Alerts -->
@@ -305,7 +345,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{url('/logout')}}" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{url('signout') }}" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -321,54 +361,55 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">All Products</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Issue Refund</h1>
+                    <div class="container">
+<div>
 
-                    <!-- DataTales Example -->
-                    <br>
-                   
-                    <div class="card shadow mb-4">
-                     
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                        
-                                            <td>Product name</td>
-                                            <td>SKU</td>
-                                            <td>Price</td>
-                                            <td>Description</td>
-                                             <td>Action</td>
-                                            
-                                        </tr>
-                                    </thead>
-                                   
-                                    <tbody>
-                                        <tr>
-                                        @foreach($product as $crud)
-                                        
-                            <td>{{$crud->pname}}</td>
-                            <td>{{$crud->sku}}</td>
-                            <td>{{$crud->price}}</td>  
-                            <td>{{$crud->desc}}</td> 
-                            <td>
-                                <a href="{{route('delete-product',['id'=> $crud->id])}}" >Delete</a>
-                                
-                            </td>
-                                                </tr>
-                                                @endforeach
-                                                </tbody>
-                                </table>
-                                @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
-        </div>
-    @endif
-                            </div>
-                        </div>
-                    </div>
+@if ($errors->any())
+    <div>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
+ 
+
+<form method="POST" action="{{url('refund')}}" >
+ @csrf
+<div class="row">
+  <div class="col-md-3">
+
+    <label for="validationDefault01" class="form-label">Transaction Id</label>
+    <input type="text" name ="tid" class="form-control" id="validationDefault01" required>
+  </div>
+  <div class="col-md-3">
+    <label for="validationDefault01" class="form-label">Refund amount</label>
+    <input type="text" name ="amount" class="form-control" id="validationDefault01" required>
+</div>
+
+</div>
+
+ <br>
+
+  <div class="col-md-12">
+ 
+   <button class="btn btn-primary"  type="submit">Refund</button>
+  </div>
+</div>
+<br>
+@if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
+
+</form>
+</div>
+
+                        
                 </div>
                 <!-- /.container-fluid -->
 
@@ -410,64 +451,32 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{{url('/logout')}}">Logout</a>
+                    <a class="btn btn-primary" href="">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+ 
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{asset('admin/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{asset('admin/js/sb-admin-2.min.js')}}"></script>
 
-    <!-- Page level plugins -->
-    <script src="{{asset('admin/vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('admin/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{asset('admin/js/demo/datatables-demo.js')}}"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-$('.delete-confirm').on('click', function (event) {
-    event.preventDefault();
-    const url = $(this).attr('href');
-    swal({
-        title: 'Are you sure?',
-        text: 'Are you sure!',
-        icon: 'warning',
-        buttons: ["Cancel", "Yes!"],
-    }).then(function(value) {
-        if (value) {
-            window.location.href = url;
-        }
-    });
-});
-$('.edit-confirm').on('click', function (event) {
-    event.preventDefault();
-    const url = $(this).attr('href');
-    swal({
-        title: 'Are you sure?',
-        text: 'are you sure',
-        icon: 'warning',
-        buttons: ["Cancel", "Yes!"],
-    }).then(function(value) {
-        if (value) {
-            window.location.href = url;
-        }
-    });
-});
-  
-  
-
-</script>
+                   <!-- Bootstrap core JavaScript-->
+                   <script src="{{asset('admin/vendor/jquery/jquery.min.js')}}"></script>
+                   <script src="{{asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+                
+                   <!-- Core plugin JavaScript-->
+                   <script src="{{asset('admin/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+                
+                   <!-- Custom scripts for all pages-->
+                   <script src="{{asset('admin/js/sb-admin-2.min.js')}}"></script>
+                
+                   <!-- Page level plugins -->
+                   <script src="{{asset('admin/vendor/chart.js/Chart.min.js')}}"></script>
+                
+                   <!-- Page level custom scripts -->
+                   <script src="{{asset('admin/js/demo/chart-area-demo.js')}}"></script>
+                   <script src="{{asset('admin/js/demo/chart-pie-demo.js')}}"></script>
 </body>
 
 </html>
-
-                                         

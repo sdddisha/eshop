@@ -77,9 +77,6 @@
                            </div>
                        </div>
                    </div>
-                   <a href="{{ route('logout')}}">
-                    <button type="button" class="btn btn-danger">Logout 
-                            </button></a>
                         <form class="form-inline">
                            <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                            <i class="fa fa-search" aria-hidden="true"></i>
@@ -146,7 +143,7 @@
                                       $prodID= base64_encode($str);
                                       ?>
             
-                            <a href= "{{url('checkout',$prodID)}}" class="btn btn-success">Checkout</a>
+                            <a href= "{{url('checkout1',$prodID)}}" class="btn btn-success">Checkout as Guest</a>
                         </td>
                     </tr>
                 </tfoot>
@@ -363,7 +360,7 @@
             var ele = $(this);
       
             $.ajax({
-                url: '{{ route('update.cart') }}',
+                url: '{{ route('update.cart2') }}',
                 method: "patch",
                 data: {
                     _token: '{{ csrf_token() }}', 
@@ -383,7 +380,7 @@
       
             if(confirm("Are you sure want to remove?")) {
                 $.ajax({
-                    url: '{{ route('remove.from.cart') }}',
+                    url: '{{ route('remove.from.cart2') }}',
                     method: "DELETE",
                     data: {
                         _token: '{{ csrf_token() }}', 

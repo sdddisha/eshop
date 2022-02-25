@@ -411,15 +411,19 @@
 </select>
     </div>
     <div class="row">
-  <div class="col-md-4">
+        <div class="col-md-3">
+            <label for="validationDefault01" class="form-label">SKU</label>
+            <input type="text" name ="sku" class="form-control" id="validationDefault01" required>
+          </div>
+  <div class="col-md-3">
     <label for="validationDefault01" class="form-label">Product</label>
     <input type="text" name ="pname" class="form-control" id="validationDefault01" required>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <label for="validationDefault02" class="form-label">Price</label>
     <input type="text" name ="price" class="form-control" id="validationDefault02"  required>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <label for="validationDefault02" class="form-label">Description</label>
     <textarea id="w3review" name="desc" rows="4" cols="30">
   </textarea>
@@ -428,7 +432,7 @@
 <div class="row">
 <div class="col-md-6">
 
-    <input type="file" name="file" class="form-control">
+    <input type="file" name="imageFile[]" class="form-control"  id="images" multiple="multiple">
 
 </div>
   <div class="col-6">
@@ -443,13 +447,7 @@
 
             </div>       
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
+          
             <!-- End of Footer -->
 
         </div>
@@ -516,6 +514,27 @@ arr.forEach(element =>{
 })
 });
 });
+
+</script>
+<script>
+    $(function() {
+    // Multiple images preview with JavaScript
+    var multiImgPreview = function(input, imgPreviewPlaceholder) {
+        if (input.files) {
+            var filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+                }
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+    };
+    $('#images').on('change', function() {
+        multiImgPreview(this, 'div.imgPreview');
+    });
+    });    
 </script>
 
 </body>

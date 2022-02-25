@@ -378,18 +378,21 @@
 
  
 
-<form method="POST" action="{{url('add-pages')}}" >
+<form method="POST" action="{{url('add-pages')}}" enctype="multipart/form-data" >
  @csrf
 <div class="row">
   <div class="col-md-4">
 
     <label for="validationDefault01" class="form-label">Page title</label>
-    <input type="text" name ="name" class="form-control" id="validationDefault01" required>
+   
+    <textarea id="w3review" class="ckeditor form-control" name="name" rows="8" cols="50" required>
+    </textarea>
   </div>
  
   <div class="col-md-4">
     <label for="validationDefault02" class="form-label">Description</label>
-    <textarea id="w3review" name="des" rows="4" cols="30">
+    
+        <textarea id="w3review" class="ckeditor form-control" name="des" rows="8" cols="50" required>
   </textarea>
   </div>
   <div class="col-md-4">
@@ -479,6 +482,14 @@
                    <!-- Page level custom scripts -->
                    <script src="{{asset('admin/js/demo/chart-area-demo.js')}}"></script>
                    <script src="{{asset('admin/js/demo/chart-pie-demo.js')}}"></script>
+                   <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+                   <script>
+                   var allEditors = document.querySelectorAll('.ckeditor');
+                   for (var i = 0; i < allEditors.length; ++i) {
+                     ClassicEditor.create(allEditors[i]);
+                   }
+                 
+                 </script>
 </body>
 
 </html>

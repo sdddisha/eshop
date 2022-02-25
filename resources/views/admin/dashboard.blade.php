@@ -84,6 +84,7 @@
                         <a class="collapse-item" href="{{url('add-coupon')}}">Add Coupon</a>
                         <a class="collapse-item" href="{{url('show-coupon')}}">Show Coupons</a>
                         <a class="collapse-item" href="{{url('show-order')}}">Show order details</a>
+                        <a class="collapse-item" href="{{url('refund')}}">Refund orders</a>
                         <a class="collapse-item" href="{{url('add-pages')}}">Add Pages</a>
                         <a class="collapse-item" href="{{url('show-pages')}}">Show Pages</a>
                         

@@ -48,9 +48,10 @@ class CategoryController extends Controller
       return redirect('/dashboard');
     }
 
-    public function delete(Category $category ,$id){
-  
-      Category::destroy(array('id',$id));
+    public function destroy(Category $category ,$id){
+    //  dd($id);
+    Category::destroy(array('id',$id));
+
         return view('admin.category.add');
     }
     }

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-// ldfs;dsSssssslgkdgkfkg;fdgl';gdlflf;dfl'
+
 
 /** All Paypal Details class **/
 use PayPal\Api\Amount;
@@ -55,99 +55,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-//     public function index()
-//     {    $id=Auth::user()->id;
-//          $products=Product::all();
-    
-//      //  $user = request()->session()->put('user', Auth::id()); puts data into session
 
-//          $total=Cart::where('user_id',$id)->sum('quantity');
-        
-//         return view('home',compact('products','total'));
-//     }
-//     public function addToCart(Request $request,$pid,$price)
-//     { 
-      
-
-//         $id=Auth::user()->id;
-//         $q=Cart::select('*')
-//         ->where([
-//             ['quantity', '=', 1],
-//             ['product_id', '=', $pid]
-//         ])->count();
-//         // dd($q);
-//         if($q==0){
-         
-//          $cart=new Cart();
-//          $cart->user_id=$id;
-//          $cart->product_id=$pid;
-//          $cart->price=$price;
-//           $cart->save();
-//          return back();
-//             }
-       
-//             else{
-//                 $q++;
-//              Cart::where("product_id", $pid)->update(["quantity" => $q]);
-//             return back();
-//     }
-// }
-//      function cartItem()
-//     { 
-//         $id= Auth::user()->id;
-        
-//         $item=Cart::where('user_id',$id)->get();
-      
-//         return view('cart',compact('item'));
-       
-//     }
-
-//     function deletecartItem($id,$pid)
-//     {  
-//     //     $task = Cart::select('*')->where([
-//     //         ["product_id", $pid],
-//     //     ['user_id',$id]
-//     //     ])->get();
-//     //    dd($task);
-
-//     //     $q=$task['quantity'];
-//     //     dd($q);
-//     //     if($task['quantity']>1)
-//     //         {   
-//     //              $q--;
-//     //              Cart::where("product_id", $pid)->update(["quantity" => $q]);
-                
-//     //             return back();
-//     //         }
-//     //     $task->delete();
-
-//     //     return back();
-       
-//     }
-            // function checkout($id,$total){
-            
-            //     return view('checkout',compact('total','id'));
-            // }
-            // function storeCheckoutDetails(Request $request,$id,$total)
-            // {
-            //     $order=new Order();
-            //     $order->user_id=$id; 
-            //     $order->total=$total; 
-            //     $order->fname=$request->input('fname');
-            //     $order->lname=$request->input('lname');
-            //     $order->address=$request->input('address');   
-            //     $order->pnumber=$request->input('pnumber'); 
-            //     $order->city=$request->input('city');  
-            //     $order->country=$request->input('country');  
-            //     $order->zip=$request->input('zip');   
-            //     $order->save();
-
-            //     DB::table('carts')->where('user_id',$id)->delete();
-            //     return back()->with('message','Order placed successfuly');
-
-                
-
-            // }
 
 
 //ajax
@@ -155,7 +63,7 @@ class HomeController extends Controller
 public function index()
 { $sub=Page::all();
     $products = Product::all();
-    return view('products', compact('products','sub'));
+    return view('products',compact('sub','products'));
 }
 
 /**
@@ -165,7 +73,8 @@ public function index()
  */
 public function cart()
 {
-    return view('cart1');
+    $sub=Page::all();
+    return view('cart1',compact('sub'));;
 }
 
 /**
@@ -236,24 +145,37 @@ public function perform(Request $request)
     }
     
     function checkout($total){
+        $sub=Page::all();
         $coupon=Coupon::all();
             $id=Auth::id();
             $prodID=base64_decode($total);
             $ship=0;
-          return view('checkout1',compact('prodID','id','ship','coupon'));
+          return view('checkout',compact('prodID','id','ship','sub','coupon'));
             }
 
             function storeCheckoutDetails(Request $request,$id,$total,$ship){
                 
-            //   $pay=  $request['payment_method'];
-            //   if ($pay='paypal')
-            //   {
-            //       $request=$request->all();
-            //       //return $this->sendRequest($uri);
-            //      return $this->payWithpaypal($request);
-            //   }
-            //   else{
-        
+                $pay=  $request['payment_method'];
+               // dd('gg');
+                if ($pay=='paypal')
+                {
+                   // dd('gg');
+                    if($total<50000){
+                        $ship=2;
+                        $total1=$total+$ship;
+                    }
+                    else{
+                        $ship=500;
+                        $total1=$total+$ship;
+                    }
+                   
+                    $string=$request->all();
+                    $data=implode(",",$string);
+                    return view(('paypal'),compact('total1','data'));
+                   
+                }
+                    else{
+                       //dd('else');
             Validator::make($request->all(), [
                 'fname' => 'required|min:3|max:35',
                 'lname' =>'required|min:3|max:35',
@@ -284,14 +206,13 @@ public function perform(Request $request)
                 $order->payment_method=$request->input('payment_method');  
                 $order->save();
                 $request->session()->forget('cart');
-                
                 return redirect('/home')->with('message','Order placed successfuly');
                // $request->session()->forget('cart');
             }   
-      //  }
+        }
             
 
-            public function payWithpaypal(Request $request)
+           public function payWithpaypal(Request $request,$total)
             {
               
                 if($request['amount']<50000){
@@ -312,14 +233,14 @@ public function perform(Request $request)
                 $item_1->setName('Item 1') /** item name **/
                     ->setCurrency('USD')
                     ->setQuantity(1)
-                    ->setPrice($request->get('amount')); /** unit price **/
+                    ->setPrice($total); /** unit price **/
     
                 $item_list = new ItemList();
                 $item_list->setItems(array($item_1));
     
                 $amount = new Amount();
                 $amount->setCurrency('USD')
-                    ->setTotal($request->get('amount'));
+                    ->setTotal($total);
     
                 $transaction = new Transaction();
                 $transaction->setAmount($amount)
@@ -396,7 +317,7 @@ public function perform(Request $request)
                 if (empty($request->PayerID) || empty($request->token)) {
     
                     Session::put('error', 'Payment failed');
-                    return Redirect::to('/');
+                    return Redirect::to('/home');
     
                 }
     
@@ -412,15 +333,14 @@ public function perform(Request $request)
     
                     Session::put('success', 'Payment success');
                     //add update record for cart
-                    $id=Auth::id();
-                    DB::table('carts')->where('user_id',$id)->delete();
-                    return back()->with('message','Order placed successfuly');  //back to product page
+                    return redirect('/home')->with('message','Order placed successfuly') ;//back to product page
     
                 }
     
                 Session::put('error', 'Payment failed');
                 return Redirect::to('/'); 
-    
+            
             }
      
 }
+

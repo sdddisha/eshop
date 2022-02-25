@@ -29,4 +29,12 @@ class CouponController extends Controller
         $coupon=Coupon::all();
         return view('admin.coupon.show',compact('coupon'));
     }
+
+    public function destroy($id)
+{
+  // delete task
+  $task=Coupon::find($id);
+  $task->delete();
+  return redirect('/show-coupon')->with('success','Coupon deleted successfully');
+}
 }

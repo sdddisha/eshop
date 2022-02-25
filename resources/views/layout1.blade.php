@@ -12,12 +12,12 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 col-sm-12 col-12 main-section">
-        <a href="{{ route('logout')}}">
-        <button type="button" class="btn btn-danger">Logout 
-                </button></a>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-12 main-section">
+            <a href="{{ route('logout')}}">
+            <button type="button" class="btn btn-danger">Logout 
+                    </button></a>
               
             <div class="dropdown">
                 <button type="button" class="btn btn-info" data-toggle="dropdown">
